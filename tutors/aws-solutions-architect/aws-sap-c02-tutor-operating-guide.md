@@ -4,10 +4,10 @@ Use this guide to run consistent AI-assisted tutoring sessions against the curri
 
 ## Inputs to read before each session
 
-1. `thoughts/curriculum/aws-sap-c02-curriculum-index.md`
-2. `thoughts/progress/aws-sap-c02-progress-tracker.md`
-3. The most recent relevant file in `thoughts/sessions/`
-4. `thoughts/learner-profile.md`
+1. `tutors/aws-solutions-architect/curriculum/aws-sap-c02-curriculum-index.md`
+2. `tutors/aws-solutions-architect/progress/aws-sap-c02-progress-tracker.md`
+3. The most recent relevant file in `tutors/aws-solutions-architect/sessions/`
+4. `tutors/aws-solutions-architect/learner-profile.md`
 
 ## Objective selection rules
 
@@ -61,5 +61,5 @@ Keep the session focused on one primary objective and at most one secondary obje
 
 ## Session note naming
 
-- New sessions should use `thoughts/sessions/YYYY-MM-DD-topic.md`.
+- New sessions should use `tutors/aws-solutions-architect/sessions/YYYY-MM-DD-topic.md`.
 - If multiple sessions happen on the same day, keep the date and add a short unique topic suffix.

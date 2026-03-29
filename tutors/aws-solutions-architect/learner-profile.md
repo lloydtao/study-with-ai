@@ -6,7 +6,7 @@ Last updated: 2026-03-29
 
 - The learner wants a structured SAP-C02 study system that can be continued over many sessions.
 - The learner baseline has not been formally assessed yet.
-- The best starting point is the curriculum sequence defined in `thoughts/curriculum/aws-sap-c02-curriculum-index.md`.
+- The best starting point is the curriculum sequence defined in `tutors/aws-solutions-architect/curriculum/aws-sap-c02-curriculum-index.md`.
 
 ## Baseline to confirm
 

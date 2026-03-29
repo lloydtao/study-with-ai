@@ -14,6 +14,17 @@ The implementation should follow the repository's current shape: a lightweight n
 
 Last updated: 2026-03-29
 
+- Phase 1 status: Completed
+- Phase 2 status: Completed
+- Phase 3 status: Completed
+- Phase 4 status: Completed
+- Phase 5 status: Completed
+- `tutors/` and `tutors/aws-solutions-architect/` have been established as the canonical tutor namespace.
+- Shared guidance in `thoughts/README.md` now reserves `thoughts/` for shared `research/` and `plans/`.
+- AWS SAP curriculum, progress, session, and workflow artifacts have been moved under `tutors/aws-solutions-architect/`.
+- Curriculum references, tracker references, and workflow paths have been updated to the new canonical namespace.
+- Validation confirmed five curriculum files, stable objective IDs `SAP-D1-O1` through `SAP-D4-O5`, the required tutoring-session template sections, and a clean shared `thoughts/` layout.
+- The AWS SAP tutor can now start the next session from `tutors/aws-solutions-architect/` without relying on deprecated operating paths.
 - Existing AWS SAP content has already been drafted, but it is currently split across legacy paths under `thoughts/`.
 - The updated requirement changes the target information architecture:
   - `thoughts/` should contain only shared `research/` and `plans/`
