@@ -29,10 +29,10 @@ This curriculum translates the SAP-C02 exam scope into trackable learning object
 
 | Unit | Domain | Weight | Objective file | Objective count |
 | --- | --- | --- | --- | --- |
-| 1 | Domain 2: Design for New Solutions | 29% | `thoughts/curriculum/aws-sap-c02-domain-2-new-solutions.md` | 5 |
-| 2 | Domain 1: Design Solutions for Organizational Complexity | 26% | `thoughts/curriculum/aws-sap-c02-domain-1-organizational-complexity.md` | 5 |
-| 3 | Domain 3: Continuous Improvement for Existing Solutions | 25% | `thoughts/curriculum/aws-sap-c02-domain-3-continuous-improvement.md` | 5 |
-| 4 | Domain 4: Accelerate Workload Migration and Modernization | 20% | `thoughts/curriculum/aws-sap-c02-domain-4-migration-modernization.md` | 5 |
+| 1 | Domain 2: Design for New Solutions | 29% | `tutors/aws-solutions-architect/curriculum/aws-sap-c02-domain-2-new-solutions.md` | 5 |
+| 2 | Domain 1: Design Solutions for Organizational Complexity | 26% | `tutors/aws-solutions-architect/curriculum/aws-sap-c02-domain-1-organizational-complexity.md` | 5 |
+| 3 | Domain 3: Continuous Improvement for Existing Solutions | 25% | `tutors/aws-solutions-architect/curriculum/aws-sap-c02-domain-3-continuous-improvement.md` | 5 |
+| 4 | Domain 4: Accelerate Workload Migration and Modernization | 20% | `tutors/aws-solutions-architect/curriculum/aws-sap-c02-domain-4-migration-modernization.md` | 5 |
 
 ## Cross-cutting themes
 
