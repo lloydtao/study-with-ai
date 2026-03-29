@@ -6,6 +6,25 @@ This plan covers adding a structured, markdown-first tutoring workflow to this r
 
 The implementation should follow the repository's current shape: a lightweight notes workspace rather than an application codebase. The plan therefore assumes a documentation-first solution under `thoughts/` instead of a web app, CLI, or database-backed system.
 
+## Implementation progress
+
+Last updated: 2026-03-29
+
+- Phase 1: Completed
+  - Created `thoughts/curriculum/`, `thoughts/progress/`, and `thoughts/sessions/`
+  - Added `thoughts/README.md` to define folder roles, naming conventions, and canonical sources of truth
+- Phase 2: Completed
+  - Added a curriculum index with study sequencing, cross-cutting themes, and reference backbone
+  - Added domain objective files for all four SAP-C02 domains with stable objective IDs `SAP-D1-O1` through `SAP-D4-O5`
+- Phase 3: Completed
+  - Added a canonical progress tracker template with status definitions, confidence scoring, rollup rules, and objective-level tracking rows
+- Phase 4: Completed
+  - Added a tutor operating guide with objective selection rules, review cadence, mastery decisions, and tracker update rules
+  - Added a reusable session template covering teaching notes, diagnostic questions, misunderstandings, action items, and tracker updates
+- Phase 5: Completed
+  - Seeded the initial canonical progress tracker for all 20 objectives
+  - Added a learner profile note with baseline assumptions, preferences, and first-session goals
+
 ## Current state analysis
 
 - The repository currently contains only root metadata files plus notes directories:
