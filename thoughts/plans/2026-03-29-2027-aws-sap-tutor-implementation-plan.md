@@ -4,42 +4,37 @@
 
 This plan covers adding a structured, markdown-first tutoring workflow to this repository so it can support ongoing preparation for the AWS Certified Solutions Architect - Professional (SAP-C02) exam. The target outcome is a reusable study system that lets an AI tutor guide sessions over time using a curriculum built from explicit learning objectives, while also tracking progress, confidence, gaps, and next steps.
 
-The implementation should follow the repository's current shape: a lightweight notes workspace rather than an application codebase. The plan therefore assumes a documentation-first solution under `thoughts/` instead of a web app, CLI, or database-backed system.
+The implementation should follow the repository's current shape: a lightweight notes workspace rather than an application codebase. The plan therefore assumes a documentation-first solution, but with a clearer separation of concerns:
+
+- `thoughts/` is reserved for cross-tutor `research/` and `plans/`
+- tutor-specific operating content lives under `tutors/`
+- all AWS SAP study materials live under `tutors/aws-solutions-architect/`
 
 ## Implementation progress
 
 Last updated: 2026-03-29
 
-- Phase 1: Completed
-  - Created `thoughts/curriculum/`, `thoughts/progress/`, and `thoughts/sessions/`
-  - Added `thoughts/README.md` to define folder roles, naming conventions, and canonical sources of truth
-- Phase 2: Completed
-  - Added a curriculum index with study sequencing, cross-cutting themes, and reference backbone
-  - Added domain objective files for all four SAP-C02 domains with stable objective IDs `SAP-D1-O1` through `SAP-D4-O5`
-- Phase 3: Completed
-  - Added a canonical progress tracker template with status definitions, confidence scoring, rollup rules, and objective-level tracking rows
-- Phase 4: Completed
-  - Added a tutor operating guide with objective selection rules, review cadence, mastery decisions, and tracker update rules
-  - Added a reusable session template covering teaching notes, diagnostic questions, misunderstandings, action items, and tracker updates
-- Phase 5: Completed
-  - Seeded the initial canonical progress tracker for all 20 objectives
-  - Added a learner profile note with baseline assumptions, preferences, and first-session goals
+- Existing AWS SAP content has already been drafted, but it is currently split across legacy paths under `thoughts/`.
+- The updated requirement changes the target information architecture:
+  - `thoughts/` should contain only shared `research/` and `plans/`
+  - AWS SAP curriculum, progress, session, and workflow artifacts should be consolidated under `tutors/aws-solutions-architect/`
+- The remaining work is therefore primarily namespace alignment, migration of canonical paths, and validation that the tutoring workflow still works cleanly after relocation.
 
 ## Current state analysis
 
-- The repository currently contains only root metadata files plus notes directories:
-  - `README.md`
-  - `.gitignore`
-  - `LICENSE`
+- The repository is still a notes workspace rather than an application codebase.
+- `thoughts/research/` and `thoughts/plans/` exist and are the right home for shared research and implementation planning.
+- AWS SAP operating artifacts already exist, but they currently live in legacy locations such as:
+  - `thoughts/curriculum/`
+  - `thoughts/progress/`
+  - `thoughts/sessions/`
+  - `thoughts/aws-sap-c02-tutor-operating-guide.md`
+  - `thoughts/learner-profile.md`
+- There is also a partial, currently unused namespace at `thoughts/aws-solutions-architect/` with empty subdirectories.
+- No `tutors/` directory exists yet, so the requested multi-tutor namespace has not been established.
+- The existing AWS research note remains the key factual source document:
   - `thoughts/research/2026-03-28-1545-aws-solutions-architect-professional-exam-study.md`
-- `README.md` defines the repo purpose as "Personal study notes using LLMs as a tutor."
-- There is no application code, package manifest, build tooling, study workflow, curriculum structure, tracker, session template, or exam-specific prompt/process file in the repo today.
-- `thoughts/plans/` exists but is empty before this plan document.
-- The existing AWS research note is the only in-repo domain artifact relevant to this task. It establishes:
-  - the repo is currently a notes workspace
-  - SAP-C02 domain weightings
-  - core AWS reference sources for study
-  - a gap between high-level research and a usable tutoring/progress workflow
+- The main gap is now structural rather than conceptual: the content exists, but the canonical locations need to be reorganized so future tutors can coexist cleanly.
 
 ## Desired end state
 
@@ -47,11 +42,15 @@ The repository should support an ongoing tutoring loop for SAP-C02 preparation w
 
 At the end of implementation, the repo should contain:
 
-- A defined study information architecture under `thoughts/` for curriculum, tracking, and session history.
+- A shared notes area where `thoughts/` contains only:
+  - `thoughts/research/`
+  - `thoughts/plans/`
+- A tutor namespace at `tutors/aws-solutions-architect/` that contains the SAP-C02 curriculum, tracker, session history, tutor workflow, and learner profile.
 - A curriculum broken into learning objectives aligned to the SAP-C02 domains and major AWS study themes already identified in the research note.
 - A progress-tracking mechanism that records status for each objective over time.
 - A repeatable tutoring workflow that tells the AI tutor how to run sessions, assess readiness, revisit weak areas, and pick the next topic.
 - Seed content sufficient to begin studying immediately without inventing the structure from scratch each session.
+- A structure that can later support additional tutor namespaces under `tutors/` without mixing their operating files into `thoughts/`.
 
 ## What we are not doing
 
@@ -61,6 +60,7 @@ At the end of implementation, the repo should contain:
 - Writing a full textbook for every AWS service before the workflow becomes usable.
 - Automating scoring with scripts unless a later task explicitly asks for that.
 - Replacing the existing research note; it should remain the factual source document that the new structure builds upon.
+- Turning `thoughts/` into the home for tutor-specific curriculum, progress, or session files.
 
 ## Implementation approach
 
@@ -68,9 +68,9 @@ Use a markdown-first content architecture that fits the current repository and k
 
 Proposed approach:
 
-1. Define a stable folder structure for exam study artifacts under `thoughts/`.
-2. Convert the existing exam research into a curriculum backbone based on SAP-C02 domains and supporting themes such as Well-Architected, migration strategies, organizational complexity, resiliency, security, networking, governance, and cost/performance tradeoffs.
-3. Create a learning-objective schema that is granular enough to track mastery, for example:
+1. Reserve `thoughts/` for shared `research/` and `plans/`, and create `tutors/aws-solutions-architect/` as the canonical home for AWS SAP operating artifacts.
+2. Consolidate the existing AWS SAP materials into that tutor namespace instead of keeping them spread across top-level `thoughts/` folders.
+3. Preserve the existing curriculum model and learning-objective schema so relocation does not cause unnecessary content churn. The schema should remain granular enough to track mastery, for example:
    - objective ID
    - domain
    - objective statement
@@ -79,33 +79,37 @@ Proposed approach:
    - evidence or notes
    - last reviewed date
    - next review target
-4. Create a progress tracker that summarizes where the learner stands across all objectives.
-5. Create tutoring/session templates so future AI-assisted study follows a consistent loop:
+4. Keep a canonical progress tracker that summarizes where the learner stands across all objectives.
+5. Keep tutoring/session templates so future AI-assisted study follows a consistent loop:
    - choose next objective
    - teach
    - check understanding
    - record progress
    - assign follow-up
-6. Seed the initial curriculum and tracker with enough content to support immediate use, prioritizing coverage over perfect completeness.
+6. Update all canonical-path references so the tutor can reliably navigate between shared research in `thoughts/` and tutor-specific content in `tutors/aws-solutions-architect/`.
 
 Recommended artifact set:
 
-- `thoughts/curriculum/` for the curriculum map and objective lists
-- `thoughts/progress/` for the canonical tracker
-- `thoughts/sessions/` for dated tutoring notes
 - `thoughts/research/` retained for external-source research notes
-- optionally a short tutor operating guide under `thoughts/` if future sessions need consistent instructions
+- `thoughts/plans/` retained for implementation and design plans
+- `tutors/aws-solutions-architect/curriculum/` for the curriculum map and objective lists
+- `tutors/aws-solutions-architect/progress/` for the canonical tracker
+- `tutors/aws-solutions-architect/sessions/` for dated tutoring notes
+- `tutors/aws-solutions-architect/aws-sap-c02-tutor-operating-guide.md` for workflow instructions
+- `tutors/aws-solutions-architect/learner-profile.md` for learner context and preferences
+- optionally `tutors/aws-solutions-architect/README.md` if a tutor-local index is useful for navigation
 
 ## Phased execution plan
 
-### Phase 1: Establish study system structure
+### Phase 1: Establish shared-versus-tutor structure
 
-Create the content architecture and define the role of each document so the repository has a clear source of truth.
+Create the top-level information architecture so `thoughts/` and `tutors/` have clearly separated responsibilities.
 
 Key work:
 
-- Create directories for curriculum, progress, and session notes.
-- Define naming conventions for dated notes and canonical tracker files.
+- Reserve `thoughts/` for `research/` and `plans/` only.
+- Create `tutors/` and `tutors/aws-solutions-architect/` as the AWS SAP namespace.
+- Define naming conventions for canonical tutor files and dated session notes.
 - Decide which document is authoritative for:
   - exam scope
   - curriculum objectives
@@ -114,88 +118,90 @@ Key work:
 
 Success criteria:
 
-- The repository has a clear, durable study-note structure.
-- A future tutoring session can determine where to read scope, current status, and study history without ambiguity.
+- The repository has a clear, durable shared-versus-tutor structure.
+- A future tutoring session can determine where to read shared research versus tutor-specific operating state without ambiguity.
 
-### Phase 2: Design the curriculum model
+### Phase 2: Migrate and normalize AWS SAP artifacts
 
-Translate the SAP-C02 exam scope into a usable curriculum that is objective-driven instead of topic-list driven.
+Move the existing AWS SAP materials into the new tutor namespace and preserve their roles as canonical documents.
 
 Key work:
 
-- Create a curriculum index document that maps the four SAP-C02 domains into study units.
-- Break each domain into learning objectives at a trackable level of granularity.
-- Attach recommended references to each unit using the existing research note's AWS sources.
-- Order objectives into a practical study sequence that balances exam weighting with prerequisite knowledge.
+- Move curriculum files into `tutors/aws-solutions-architect/curriculum/`.
+- Move progress artifacts into `tutors/aws-solutions-architect/progress/`.
+- Move session templates and future session history into `tutors/aws-solutions-architect/sessions/`.
+- Move the tutor operating guide and learner profile into `tutors/aws-solutions-architect/`.
+- Remove or retire legacy AWS SAP operating paths under `thoughts/` once canonical replacements exist.
 
 Success criteria:
 
-- Every SAP-C02 domain is represented in the curriculum.
-- Each study unit has explicit learning objectives rather than only broad themes.
-- The curriculum is sequenced well enough to run iterative tutoring sessions.
+- All AWS SAP operating artifacts live under `tutors/aws-solutions-architect/`.
+- `thoughts/` no longer contains AWS SAP curriculum, progress, session, or workflow files outside `research/` and `plans/`.
+- The repository has one unambiguous canonical path for each AWS SAP document type.
 
-### Phase 3: Create the progress-tracking model
+### Phase 3: Revalidate the curriculum model in its new namespace
 
-Define how progress will be recorded so the tutor can adapt over time.
+Confirm that the existing curriculum still works cleanly after relocation and remains tied to the research note.
 
 Key work:
 
-- Create a canonical objective tracker template.
-- Define statuses such as `not started`, `learning`, `needs review`, `confident`, and `exam ready`.
-- Add fields for confidence, evidence, weak points, and next review date.
-- Decide how summary rollups will work at unit and domain level.
+- Ensure the curriculum index and all four domain files remain intact under the tutor namespace.
+- Keep stable objective IDs `SAP-D1-O1` through `SAP-D4-O5`.
+- Keep recommended references tied back to the shared research note in `thoughts/research/`.
+- Verify the study sequence still supports iterative tutoring sessions.
 
 Success criteria:
 
-- Progress can be tracked at objective level and summarized at domain level.
-- The tracker supports iterative review rather than one-time completion.
-- A future tutoring session can choose the next topic from recorded state instead of guesswork.
+- Every SAP-C02 domain remains represented in the namespaced curriculum.
+- Each study unit still has explicit learning objectives rather than only broad themes.
+- The curriculum remains sequenced well enough to run iterative tutoring sessions from the new location.
 
-### Phase 4: Define the tutor workflow
+### Phase 4: Revalidate tracking and tutor workflow
 
-Specify how the AI tutor should operate against the curriculum and tracker.
+Ensure the progress model and tutor operating process still work after the namespace change.
 
 Key work:
 
-- Create a tutoring-session template with sections for:
+- Confirm the canonical objective tracker and tracker template live under `tutors/aws-solutions-architect/progress/`.
+- Confirm the tutoring-session template lives under `tutors/aws-solutions-architect/sessions/` with sections for:
   - objective(s) covered
   - teaching notes
   - diagnostic questions
   - misunderstandings
   - action items
   - tracker updates
-- Create a lightweight operating guide for how the tutor chooses objectives, revisits weak areas, and logs outcomes.
-- Define the cadence for review loops, such as new material versus spaced review.
+- Confirm the operating guide explains how the tutor chooses objectives, revisits weak areas, and logs outcomes from the new canonical paths.
+- Update any cross-references that still point to legacy `thoughts/` operating paths.
 
 Success criteria:
 
-- The tutor can run repeatable sessions with consistent outputs.
-- The workflow clearly connects teaching, checking understanding, and updating progress.
-- Session notes can be used as evidence for mastery decisions.
+- Progress can still be tracked at objective level and summarized at domain level.
+- The tutor can still run repeatable sessions with consistent outputs.
+- Session notes can still be used as evidence for mastery decisions without path ambiguity.
 
-### Phase 5: Seed initial content for immediate use
+### Phase 5: Confirm immediate usability and future extensibility
 
-Populate the system enough that studying can begin right away.
+Confirm the AWS SAP tutor can be used immediately and that the repository is ready for additional tutor namespaces later.
 
 Key work:
 
-- Add the first pass of curriculum objectives across all four domains.
-- Create the initial tracker file.
-- Create the first session template.
-- Optionally create an initial learner-profile note to capture assumptions, background, and target exam timeline if needed later.
+- Verify the migrated curriculum, tracker, session template, operating guide, and learner profile are all in place.
+- Verify the AWS SAP tutor can start a new study session without relying on deprecated paths.
+- Leave `thoughts/` clean enough that future tutors can follow the same pattern under `tutors/<tutor-name>/`.
 
 Success criteria:
 
-- The repository is immediately usable for the next tutoring session.
-- There is enough seeded structure that future work is iterative refinement, not reinvention.
+- The repository is immediately usable for the next AWS SAP tutoring session.
+- Future tutor implementations can be added without restructuring `thoughts/` again.
+- Further work becomes iterative refinement inside a stable multi-tutor layout rather than another architecture change.
 
 ## Success criteria for each phase
 
-- Phase 1 succeeds when the repository has an unambiguous study-system structure.
-- Phase 2 succeeds when SAP-C02 scope is represented as explicit, trackable learning objectives.
-- Phase 3 succeeds when mastery and review state can be recorded and summarized reliably.
-- Phase 4 succeeds when the tutor has a repeatable session process tied to the tracker.
-- Phase 5 succeeds when the repository contains enough initial curriculum and tracker content to begin studying immediately.
+- Phase 1 succeeds when `thoughts/` and `tutors/` have unambiguous responsibilities.
+- Phase 2 succeeds when every AWS SAP operating artifact has one canonical home under `tutors/aws-solutions-architect/`.
+- Phase 3 succeeds when SAP-C02 scope remains represented as explicit, trackable learning objectives in the new namespace.
+- Phase 4 succeeds when mastery, review state, and repeatable tutor workflow still function reliably after relocation.
+- Phase 5 succeeds when the AWS SAP tutor is immediately usable and the repository is ready for more tutor namespaces without structural rework.
 
 ## Risks or dependencies
 
@@ -203,4 +209,5 @@ Success criteria:
 - The existing research note identified some AWS Skill Builder details as not directly verifiable in the earlier environment; implementation should avoid depending on unavailable page specifics unless separately confirmed.
 - Scope can expand quickly because SAP-C02 spans broad enterprise architecture topics. Objective granularity should be practical, not exhaustive.
 - Without a defined learner baseline, the initial sequence may need later adjustment for prior AWS experience, weak domains, or target exam date.
+- Relative links and source-of-truth references will need careful updates during migration so the tutor does not follow stale `thoughts/` paths.
 - If the repository later evolves into software rather than notes, the markdown structure may need to be migrated, so file organization should stay clean and predictable.
